@@ -1,8 +1,9 @@
 #include "motor_control.h"
 
 
+
 void setup() {
-  
+  Serial.begin(115200); 
 
 }
 
