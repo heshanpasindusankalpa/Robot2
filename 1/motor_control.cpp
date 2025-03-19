@@ -2,9 +2,9 @@
 #define LRPWM 9
 #define LLPWM 10
 #define LPWM 11
-#define RRPWM 7
-#define RLPWM 8
-#define RPWM 9
+#define RRPWM 6
+#define RLPWM 7
+#define RPWM 8
 
 void setupMotors() {
  
