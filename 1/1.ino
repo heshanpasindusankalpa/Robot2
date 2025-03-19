@@ -1,13 +1,16 @@
 #include "motor_control.h"
 
-
-
 void setup() {
-  Serial.begin(115200); 
+Serial.begin(115200); 
+setupMotors();
 
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+  
+moveForward();
+delay(500);
+moveForward();
+delay(500);
 
 }
