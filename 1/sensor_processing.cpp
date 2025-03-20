@@ -30,8 +30,8 @@ void sendIRSensorData() {
     int FL_value = digitalRead(IR_FL);
 
     Serial.print("IR SENSOR 1: ");
-    Serial.println(FR_value ? "DETECTED" : "NOT DETECTED");
+    Serial.println(FR_value);
     
     Serial.print("IR SENSOR 2: ");
-    Serial.println(FL_value ? "DETECTED" : "NOT DETECTED");
+    Serial.println(FL_value);
 }
