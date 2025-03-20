@@ -3,6 +3,9 @@
 void setupSensors() {
     pinMode(ULTRASONIC_TRIG, OUTPUT);
     pinMode(ULTRASONIC_ECHO, INPUT);
+    pinMode(ULTRASONIC_TRIG, OUTPUT);
+    pinMode(ULTRASONIC_ECHO, INPUT);
+    
    
 }
 
