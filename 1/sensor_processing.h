@@ -5,9 +5,11 @@
 
 #define ULTRASONIC_TRIG 2
 #define ULTRASONIC_ECHO 3
+#define IR_FR 22  
+#define IR_FL 23 
 
 void setupSensors();
-void sendUltrasonicData();
+//void sendUltrasonicData();
 void sendIRSensorData();
 
 #endif
