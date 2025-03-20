@@ -5,7 +5,7 @@
 #define RRPWM 6
 #define RLPWM 7
 #define RPWM 8
-#define sLow 75
+#define sLow 85
 
 void setupMotors() {
  
@@ -22,8 +22,8 @@ void moveForward() {
   digitalWrite(LRPWM, LOW);
   digitalWrite(LLPWM, HIGH);
   analogWrite(LPWM, sLow);
-  digitalWrite(RRPWM, LOW);
-  digitalWrite(RLPWM, HIGH);
+  digitalWrite(RRPWM, HIGH);
+  digitalWrite(RLPWM, LOW);
   analogWrite(RPWM, sLow);
  
 }
