@@ -5,9 +5,9 @@
 
 void setupMotors();
 void moveForward();
-//void moveBackward();
-//void turnLeft();
-//void turnRight();
+void moveBackward();
+void turnLeft();
+void turnRight();
 void stopMotors();
 
 #endif
