@@ -8,6 +8,6 @@ void moveForward();
 //void moveBackward();
 //void turnLeft();
 //void turnRight();
-//void stopMotors();
+void stopMotors();
 
 #endif
