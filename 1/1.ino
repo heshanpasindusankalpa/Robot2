@@ -9,8 +9,7 @@ setupMotors();
 void loop() {
   
 moveForward();
-delay(500);
-moveForward();
-delay(500);
+delay(5000);
+stopMotors();
 
 }
