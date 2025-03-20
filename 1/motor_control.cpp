@@ -5,6 +5,7 @@
 #define RRPWM 6
 #define RLPWM 7
 #define RPWM 8
+#define sLow 75
 
 void setupMotors() {
  
@@ -20,32 +21,23 @@ pinMode(RPWM, OUTPUT);
 void moveForward() {
   digitalWrite(LRPWM, LOW);
   digitalWrite(LLPWM, HIGH);
-  analogWrite(LPWM, 75);
+  analogWrite(LPWM, sLow);
   digitalWrite(RRPWM, LOW);
   digitalWrite(RLPWM, HIGH);
-  analogWrite(RPWM, 75);
+  analogWrite(RPWM, sLow);
  
 }
 
 void moveBackward() {
   digitalWrite(LRPWM, HIGH);
   digitalWrite(LLPWM, LOW);
-  analogWrite(LPWM, 50);
+  analogWrite(LPWM, sLow);
   digitalWrite(RRPWM, HIGH);
   digitalWrite(RLPWM, LOW);
-  analogWrite(RPWM, 255);
+  analogWrite(RPWM, sLow);
  
 }
 
-/*void moveBackward() {
-  digitalWrite(LRPWM, HIGH);
-  digitalWrite(LLPWM, LOW);
-  analogWrite(LPWM, 50);
-  digitalWrite(RRPWM, HIGH);
-  digitalWrite(RLPWM, LOW);
-  analogWrite(RPWM, 255);
- 
-}*/
 void stopMotors() {
   digitalWrite(LRPWM, LOW);
   digitalWrite(LLPWM, LOW);
@@ -54,3 +46,24 @@ void stopMotors() {
   digitalWrite(RLPWM, LOW);
   analogWrite(RPWM, 0);
 }
+void turnLeft() {
+  digitalWrite(LRPWM, HIGH);  // Left wheel moves backward
+  digitalWrite(LLPWM, LOW);
+  analogWrite(LPWM, sLow);
+  
+  digitalWrite(RRPWM, LOW);   // Right wheel moves forward
+  digitalWrite(RLPWM, HIGH);
+  analogWrite(RPWM, sLow);
+}
+
+void turnRight() {
+  digitalWrite(LRPWM, LOW);   // Left wheel moves forward
+  digitalWrite(LLPWM, HIGH);
+  analogWrite(LPWM, sLow);
+  
+  digitalWrite(RRPWM, HIGH);  // Right wheel moves backward
+  digitalWrite(RLPWM, LOW);
+  analogWrite(RPWM, sLow);
+}
+
+
