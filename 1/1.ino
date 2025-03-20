@@ -9,7 +9,10 @@ setupMotors();
 void loop() {
   
 moveForward();
-delay(5000);
+delay(3000);
 stopMotors();
+delay(1000);
+turnRight();
+delay(1000);
 
 }
