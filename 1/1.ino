@@ -39,7 +39,7 @@ void loop() {
         // Second time seeing (0,0), turn right
         turnRight();
         delay(1000);
-        zeroCount = 0; // Reset counter after turning
+        //zeroCount = 0; // Reset counter after turning
     }
      else if (zeroCount == 3) {  
         // Third time seeing (0,0,0), stop completely
