@@ -13,7 +13,7 @@ void setup() {
 }
 
 void loop() {
-    sendIRSensorData();
+   /* sendIRSensorData();
 
     // Move forward until both IR sensors detect no object (0,0)
     while ( digitalRead(IR_FR) == 1 &&  digitalRead(IR_FL) == 1 &&  digitalRead(IR_FM)==1) {
@@ -46,7 +46,9 @@ void loop() {
         stopMotors();
         Serial.println("Stopping completely after 3 detections!");
         while (true);  // Infinite loop to stop execution
-    }
+    }*/
+     getColor();
+     delay(1000);
 }
 
 
