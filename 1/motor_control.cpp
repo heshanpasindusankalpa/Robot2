@@ -46,23 +46,23 @@ void stopMotors() {
   digitalWrite(RLPWM, LOW);
   analogWrite(RPWM, 0);
 }
-void turnLeft() {
+void turnRight() {
   digitalWrite(LRPWM, HIGH);  // Left wheel moves backward
   digitalWrite(LLPWM, LOW);
   analogWrite(LPWM, sLow);
   
-  digitalWrite(RRPWM, LOW);   // Right wheel moves forward
-  digitalWrite(RLPWM, HIGH);
+  digitalWrite(RRPWM, HIGH);   // Right wheel moves forward
+  digitalWrite(RLPWM, LOW);
   analogWrite(RPWM, sLow);
 }
 
-void turnRight() {
+void turnLeft() {
   digitalWrite(LRPWM, LOW);   // Left wheel moves forward
   digitalWrite(LLPWM, HIGH);
   analogWrite(LPWM, sLow);
   
-  digitalWrite(RRPWM, HIGH);  // Right wheel moves backward
-  digitalWrite(RLPWM, LOW);
+  digitalWrite(RRPWM, LOW);  // Right wheel moves backward
+  digitalWrite(RLPWM, HIGH);
   analogWrite(RPWM, sLow);
 }
 
