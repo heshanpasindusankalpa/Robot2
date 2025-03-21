@@ -89,7 +89,7 @@ int bluePW = 0;
 
 }
 
-void getColor(){
+String getColor(){
 
 int redPW = 0;
 int greenPW = 0;
@@ -134,8 +134,10 @@ int blueValue;
     230 < greenValue && greenValue < 245 &&
     230 < blueValue && blueValue < 245) {
     Serial.print("Green");
+    return "Green";
 } else {
     Serial.print("wrong");
+    return "wrong" ;
 }
 
 

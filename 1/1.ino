@@ -1,7 +1,9 @@
 #include "motor_control.h"
 #include "sensor_processing.h"
 
-#define BUZZER_PIN 12  // Define buzzer pin
+#define BUZZER_PIN 12 // Define buzzer pin
+#define LED_PIN 16
+
 
 int zeroCount = 0; // Counter for (0,0) readings
 
@@ -10,10 +12,11 @@ void setup() {
     setupMotors();
     setupSensors();  // Initialize sensors
     pinMode(BUZZER_PIN, OUTPUT);  // Set buzzer pin as output
+    pinMode(LED_PIN, OUTPUT);  
 }
 
 void loop() {
-   /* sendIRSensorData();
+   sendIRSensorData();
 
     // Move forward until both IR sensors detect no object (0,0)
     while ( digitalRead(IR_FR) == 1 &&  digitalRead(IR_FL) == 1 &&  digitalRead(IR_FM)==1) {
@@ -41,14 +44,23 @@ void loop() {
         delay(1000);
         //zeroCount = 0; // Reset counter after turning
     }
-     else if (zeroCount == 3) {  
-        // Third time seeing (0,0,0), stop completely
-        stopMotors();
-        Serial.println("Stopping completely after 3 detections!");
-        while (true);  // Infinite loop to stop execution
-    }*/
-     getColor();
-     delay(1000);
+    else if (zeroCount == 3) {
+        // Third time seeing (0,0,0), check the detected color
+        String detectedColor = getColor();
+        if (detectedColor == "Green") {
+          digitalWrite(LED_PIN,HIGH);
+            stopMotors();
+            Serial.println("Green color detected. Stopping.");
+            while (true);  // Infinite loop to stop execution
+        } else {
+            Serial.print("Detected color is ");
+            Serial.print(detectedColor);
+            Serial.println(". Continuing forward.");
+            moveForward();
+            delay(1000);  // Move forward for 1 second
+        }
+        zeroCount = 0; // Reset counter after action
+    }
 }
 
 

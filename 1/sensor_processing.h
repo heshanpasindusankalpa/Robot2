@@ -19,7 +19,7 @@
 void setupSensors();
 //void sendUltrasonicData();
 void sendIRSensorData();
-void getColor();
+String getColor();
 void colorCalibrate();
 int getRedPW();
 int getGreenPW() ;

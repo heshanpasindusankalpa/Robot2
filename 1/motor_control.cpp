@@ -5,7 +5,8 @@
 #define RRPWM 6
 #define RLPWM 7
 #define RPWM 8
-#define sLow 85
+#define sLow 100
+
 
 void setupMotors() {
  
