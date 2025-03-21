@@ -19,11 +19,11 @@ pinMode(RPWM, OUTPUT);
 }
 
 void moveForward() {
-  digitalWrite(LRPWM, LOW);
-  digitalWrite(LLPWM, HIGH);
+  digitalWrite(LRPWM, HIGH);
+  digitalWrite(LLPWM, LOW);
   analogWrite(LPWM, sLow);
-  digitalWrite(RRPWM, HIGH);
-  digitalWrite(RLPWM, LOW);
+  digitalWrite(RRPWM, LOW);
+  digitalWrite(RLPWM, HIGH);
   analogWrite(RPWM, sLow);
  
 }
