@@ -37,14 +37,18 @@ void loop() {
         // First time seeing (0,0), just move forward
         moveForward();
         delay(1000);
+        stopMotors();
+        //turnRight();
+
+
     } 
-    else if (zeroCount == 2) {  
+   /* else if (zeroCount == 2) {  
         // Second time seeing (0,0), turn right
         turnRight();
         delay(1000);
         //zeroCount = 0; // Reset counter after turning
-    }
-    else if (zeroCount == 3) {
+    }*/
+    else if (zeroCount == 2) {
         // Third time seeing (0,0,0), check the detected color
         String detectedColor = getColor();
         if (detectedColor == "Green") {

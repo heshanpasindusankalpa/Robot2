@@ -5,7 +5,14 @@
 #define RRPWM 6
 #define RLPWM 7
 #define RPWM 8
-#define sLow 100
+// Encoder Pins
+#define ENCODER_A_L 44  // Left encoder A phase
+#define ENCODER_B_L 45  // Left encoder B phase
+#define ENCODER_A_R 24 // Right encoder A phase
+#define ENCODER_B_R 25 // Right encoder B phase
+
+
+#define sLow 90
 
 
 void setupMotors() {
@@ -16,6 +23,12 @@ pinMode(LPWM, OUTPUT);
 pinMode(RRPWM, OUTPUT);
 pinMode(RLPWM, OUTPUT);
 pinMode(RPWM, OUTPUT);
+
+pinMode(ENCODER_A_L, INPUT);
+pinMode(ENCODER_B_L, INPUT);
+pinMode(ENCODER_A_R, INPUT);
+pinMode(ENCODER_B_R, INPUT);
+
      
 }
 
@@ -65,6 +78,44 @@ void turnLeft() {
   digitalWrite(RRPWM, LOW);  // Right wheel moves backward
   digitalWrite(RLPWM, HIGH);
   analogWrite(RPWM, sLow);
+}
+
+// Interrupt routines to count encoder ticks
+void leftEncoderISR() {
+  if (digitalRead(ENCODER_A_L) == digitalRead(ENCODER_B_L)) leftCount++;
+  else leftCount--;
+}
+
+void rightEncoderISR() {
+  if (digitalRead(ENCODER_A_R) == digitalRead(ENCODER_B_R)) rightCount++;
+  else rightCount--;
+}
+
+// PID speed correction
+void applyPID() {
+  int leftSpeedMeasured = leftCount;   // Measured speed from encoder
+  int rightSpeedMeasured = rightCount; // Measured speed from encoder
+
+  leftCount = 0;  // Reset counters
+  rightCount = 0;
+
+  error = leftSpeedMeasured - rightSpeedMeasured; // Difference between left and right wheel
+
+  integral += error;   // Integral part (accumulated error)
+  derivative = error - prevError; // Derivative part (rate of change)
+
+  int correction = Kp * error + Ki * integral + Kd * derivative;
+
+  leftSpeed = baseSpeed - correction;  
+  rightSpeed = baseSpeed + correction;
+
+  // Constrain values to prevent exceeding PWM range
+  leftSpeed = constrain(leftSpeed, 50, 255);
+  rightSpeed = constrain(rightSpeed, 50, 255);
+
+  moveForward(leftSpeed, rightSpeed);
+
+  prevError = error; // Update previous error
 }
 
 
