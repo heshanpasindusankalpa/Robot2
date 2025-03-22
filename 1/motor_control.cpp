@@ -15,6 +15,13 @@
 #define sLow 90
 
 
+volatile int leftCount = 0;
+volatile int rightCount = 0;
+
+float Kp = 1.5, Ki = 0, Kd = 0;
+float error = 0, prevError = 0, integral = 0, derivative = 0;
+int baseSpeed = 65;
+
 void setupMotors() {
  
 pinMode(LRPWM, OUTPUT);
@@ -79,6 +86,14 @@ void turnLeft() {
   digitalWrite(RLPWM, HIGH);
   analogWrite(RPWM, sLow);
 }
+void movePIDForward(int leftSpeed, int rightSpeed) {
+  digitalWrite(LRPWM, HIGH);
+  digitalWrite(LLPWM, LOW);
+  analogWrite(LPWM, leftSpeed);
+  digitalWrite(RRPWM, LOW);
+  digitalWrite(RLPWM, HIGH);
+  analogWrite(RPWM, rightSpeed);
+}
 
 // Interrupt routines to count encoder ticks
 void leftEncoderISR() {
@@ -106,14 +121,14 @@ void applyPID() {
 
   int correction = Kp * error + Ki * integral + Kd * derivative;
 
-  leftSpeed = baseSpeed - correction;  
-  rightSpeed = baseSpeed + correction;
+  int leftSpeed = baseSpeed - correction;  // Declare leftSpeed
+  int rightSpeed = baseSpeed + correction; // Declare rightSpeed
 
   // Constrain values to prevent exceeding PWM range
   leftSpeed = constrain(leftSpeed, 50, 255);
   rightSpeed = constrain(rightSpeed, 50, 255);
 
-  moveForward(leftSpeed, rightSpeed);
+  moveForward(); // You need to modify moveForward() to accept parameters if required.
 
   prevError = error; // Update previous error
 }

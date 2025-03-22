@@ -1,9 +1,16 @@
 #include "motor_control.h"
 #include "sensor_processing.h"
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+
+#define SCREEN_WIDTH 128  // OLED display width
+#define SCREEN_HEIGHT 64  // OLED display height
+#define OLED_RESET    -1   // Reset pin (not needed for some screens)
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
 #define BUZZER_PIN 12 // Define buzzer pin
 #define LED_PIN 16
-
 
 int zeroCount = 0; // Counter for (0,0) readings
 
@@ -13,58 +20,65 @@ void setup() {
     setupSensors();  // Initialize sensors
     pinMode(BUZZER_PIN, OUTPUT);  // Set buzzer pin as output
     pinMode(LED_PIN, OUTPUT);  
+
+    // Initialize OLED display
+    if (!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) { 
+        Serial.println(F("SSD1306 initialization failed!"));
+        while (true); // Stop execution if OLED fails
+    }
+    display.clearDisplay();
+    display.display();
+}
+
+void updateOLED() {
+    display.clearDisplay();
+    display.setTextSize(2);  // Set text size
+    display.setTextColor(WHITE);
+    display.setCursor(0, 10);
+    display.print("Count: ");
+    display.println(zeroCount);
+    display.display();
 }
 
 void loop() {
-   sendIRSensorData();
+    sendIRSensorData();
 
-    // Move forward until both IR sensors detect no object (0,0)
-    while ( digitalRead(IR_FR) == 1 &&  digitalRead(IR_FL) == 1 &&  digitalRead(IR_FM)==1) {
-        moveForward();
+    while (digitalRead(IR_FR) == 1 && digitalRead(IR_FL) == 1 && digitalRead(IR_FM) == 1) {
+        applyPID();
         sendIRSensorData();  // Continuously check IR sensor values
     }
 
-    stopMotors();  // Stop when IR sensors detect (0,0)
-    delay(1000);   // Pause for 1 second
+    stopMotors();
+    delay(1000);
 
-    digitalWrite(BUZZER_PIN, HIGH);  // Turn on buzzer
-    delay(500);  // Buzzer on for 0.5 seconds
-    digitalWrite(BUZZER_PIN, LOW);   // Turn off buzzer
+    digitalWrite(BUZZER_PIN, HIGH);
+    delay(200);
+    digitalWrite(BUZZER_PIN, LOW);
 
-    zeroCount++; // Increment count when (0,0) is detected
+    zeroCount++;
 
-    if (zeroCount == 1) {  
-        // First time seeing (0,0), just move forward
-        moveForward();
-        delay(1000);
-        stopMotors();
-        //turnRight();
+    updateOLED();
 
-
-    } 
-   /* else if (zeroCount == 2) {  
-        // Second time seeing (0,0), turn right
-        turnRight();
-        delay(1000);
-        //zeroCount = 0; // Reset counter after turning
-    }*/
-    else if (zeroCount == 2) {
-        // Third time seeing (0,0,0), check the detected color
-        String detectedColor = getColor();
-        if (detectedColor == "Green") {
-          digitalWrite(LED_PIN,HIGH);
-            stopMotors();
-            Serial.println("Green color detected. Stopping.");
-            while (true);  // Infinite loop to stop execution
-        } else {
-            Serial.print("Detected color is ");
-            Serial.print(detectedColor);
-            Serial.println(". Continuing forward.");
-            moveForward();
-            delay(1000);  // Move forward for 1 second
+    if (zeroCount == 1) {
+        // After first zeroCount, delay
+       // delay(1500); // Add delay here as required
+        while (zeroCount < 2) {  // Keep turning until zeroCount == 2
+            turnRight();
+            // Check if zeroCount changes during turning
+            if (digitalRead(IR_FR) == 1 && digitalRead(IR_FL) == 1 && digitalRead(IR_FM) == 1) {
+                stopMotors();
+                delay(2000);  // Pause to detect properly
+                digitalWrite(BUZZER_PIN, HIGH);
+                delay(200);
+                digitalWrite(BUZZER_PIN, LOW);
+                zeroCount++;
+                updateOLED();
+            }
         }
-        zeroCount = 0; // Reset counter after action
+        stopMotors();  // Stop after turning
     }
+
+    applyPID(); // Keep applying PID for consistent control
 }
 
 

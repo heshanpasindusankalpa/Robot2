@@ -9,5 +9,6 @@ void moveBackward();
 void turnLeft();
 void turnRight();
 void stopMotors();
+void applyPID();
 
 #endif
