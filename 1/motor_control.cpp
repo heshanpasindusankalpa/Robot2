@@ -12,7 +12,8 @@
 #define ENCODER_B_R 25 // Right encoder B phase
 
 
-#define sLow 90
+#define sLow 80
+#define turnspeed 68
 
 
 volatile int leftCount = 0;
@@ -20,7 +21,7 @@ volatile int rightCount = 0;
 
 float Kp = 1.5, Ki = 0, Kd = 0;
 float error = 0, prevError = 0, integral = 0, derivative = 0;
-int baseSpeed = 65;
+int baseSpeed = 85;
 
 void setupMotors() {
  
@@ -70,11 +71,11 @@ void stopMotors() {
 void turnRight() {
   digitalWrite(LRPWM, HIGH);  // Left wheel moves backward
   digitalWrite(LLPWM, LOW);
-  analogWrite(LPWM, sLow);
+  analogWrite(LPWM, turnspeed);
   
   digitalWrite(RRPWM, HIGH);   // Right wheel moves forward
   digitalWrite(RLPWM, LOW);
-  analogWrite(RPWM, sLow);
+  analogWrite(RPWM, turnspeed);
 }
 
 void turnLeft() {

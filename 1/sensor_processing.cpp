@@ -16,6 +16,7 @@ void setupSensors() {
     pinMode(IR_FR, INPUT);
     pinMode(IR_FL, INPUT);
     pinMode(IR_FM, INPUT);
+    pinMode(IR_B, INPUT);
     pinMode(S0, OUTPUT);
     pinMode(S1, OUTPUT);
     pinMode(S2, OUTPUT);
@@ -44,6 +45,8 @@ void sendIRSensorData() {
     int FR_value = digitalRead(IR_FR);
     int FL_value = digitalRead(IR_FL);
     int FM_value = digitalRead(IR_FM);
+    int B_value = digitalRead(IR_B);
+    
 
     Serial.print("IR SENSOR 1: ");
     Serial.println(FR_value);
@@ -53,6 +56,9 @@ void sendIRSensorData() {
 
     Serial.print("IR SENSOR 3: ");
     Serial.println(FM_value);
+
+     Serial.print("IR SENSOR 4: ");
+    Serial.println(B_value);
 }
 
 
@@ -130,9 +136,9 @@ int blueValue;
   Serial.print(greenValue);
   Serial.print(" - Blue = ");
   Serial.println(blueValue);
-  if (230 < redValue && redValue < 245 &&
-    230 < greenValue && greenValue < 245 &&
-    230 < blueValue && blueValue < 245) {
+  if (200 < redValue && redValue < 230 &&
+    200 < greenValue && greenValue < 230 &&
+    200 < blueValue && blueValue < 230) {
     Serial.print("Green");
     return "Green";
 } else {

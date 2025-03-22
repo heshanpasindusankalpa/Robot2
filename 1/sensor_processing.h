@@ -6,8 +6,9 @@
 #define ULTRASONIC_TRIG 2
 #define ULTRASONIC_ECHO 3
 #define IR_FR 22  
-#define IR_FL 14 
+#define IR_FL 42 
 #define IR_FM 15
+#define IR_B 29
 
 #define S0 4
 #define S1 3
