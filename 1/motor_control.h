@@ -10,5 +10,6 @@ void turnLeft();
 void turnRight();
 void stopMotors();
 void applyPID();
+void turnRightO();
 
 #endif

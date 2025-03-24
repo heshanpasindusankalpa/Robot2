@@ -62,8 +62,14 @@ void loop() {
         moveForward();}
         stopMotors();
         delay(600);
-        turnRight();
-        delay(1000);
+         while(digitalRead(IR_FM) == 1){
+          turnRight();
+        }
+        stopMotors();
+        delay(600);
+        while(digitalRead(IR_FR) == 1){
+          turnRightO();
+        }
 
         unsigned long startTime = millis();
         while (millis() - startTime < 2000) { // Run for 2 seconds
@@ -108,7 +114,7 @@ void loop() {
     }
    // String color=getColor();
    // if(color=="Green"){}
-   
+        
 }
 
 

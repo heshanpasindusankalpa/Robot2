@@ -1,9 +1,9 @@
 #include "motor_control.h"
 #define LRPWM 9
 #define LLPWM 10
-#define LPWM 11
+#define LPWM 5
 #define RRPWM 6
-#define RLPWM 7
+#define RLPWM 11
 #define RPWM 8
 // Encoder Pins
 #define ENCODER_A_L 44  // Left encoder A phase
@@ -13,7 +13,9 @@
 
 
 #define sLow 80
-#define turnspeed 68
+#define turnspeed 85
+#define turnspeedO 85
+
 
 
 volatile int leftCount = 0;
@@ -73,10 +75,20 @@ void turnRight() {
   digitalWrite(LLPWM, LOW);
   analogWrite(LPWM, turnspeed);
   
-  digitalWrite(RRPWM, HIGH);   // Right wheel moves forward
-  digitalWrite(RLPWM, LOW);
+  digitalWrite(RRPWM, LOW);   // Right wheel moves forward
+  digitalWrite(RLPWM, HIGH);
   analogWrite(RPWM, turnspeed);
 }
+void turnRightO() {
+  // digitalWrite(LRPWM, HIGH);  // Left wheel moves backward
+  // digitalWrite(LLPWM, LOW);
+  analogWrite(LPWM,turnspeedO );
+  
+  digitalWrite(RRPWM, HIGH);   // Right wheel moves forward
+  digitalWrite(RLPWM, LOW);
+  analogWrite(RPWM, 0);
+}
+
 
 void turnLeft() {
   digitalWrite(LRPWM, LOW);   // Left wheel moves forward
